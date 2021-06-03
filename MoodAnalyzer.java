@@ -8,22 +8,25 @@ public class MoodAnalyzer
         this.message = message;
     }
 
-    public String analyzeMood(String message)
+    public String analyzeMood(String message) throws MoodAnalysisException 
     {
         this.message = message;
         return analyzeMood();
     }
-    public String analyzeMood() 
+    public String analyzeMood() throws MoodAnalysisException 
     {
         try 
         {
-        if (message.contains("sad"))
+            if (message.length() == 0)
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_EMPTY,"please enter proper message");
+            if (message.contains("sad"))
             return "SAD";
-        return "HAPPY";
+
+            return "HAPPY";
         } 
         catch (NullPointerException e) 
-        {
-            return "HAPPY";
-        }
-     }
+        	{
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_NULL, "please enter proper message");
+        	}
+      }
 }
